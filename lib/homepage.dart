@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
                       key: formkey,
                       child: SizedBox(
                         width: 250,
-                        height: 140,
+                        // height: 0,
                         child: TextFormField(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -63,9 +63,14 @@ class _HomePageState extends State<HomePage> {
                     IconButton(
                       onPressed: (() {
                         setState(() {
-                          name.add(controller.text);
-                          log(name.toString());
-                          controller.clear();
+                          if (formkey.currentState!.validate()) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Processing Data')),
+                            );
+                            name.add(controller.text);
+                            log(name.toString());
+                            controller.clear();
+                          }
                         });
                       }),
                       icon: const Icon(Icons.add),
